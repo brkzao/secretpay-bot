@@ -409,7 +409,7 @@ function menuMessage(): string {
         '',
         'O que você quer fazer?',
         '',
-        '*1* - Pagar com Pix',
+        '*1* - Gerar QRCode PIX',
         '*2* - Ver o meu último pagamento',
         '',
         '_Envie *ajuda* para ver os comandos._',

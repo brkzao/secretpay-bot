@@ -19,8 +19,8 @@ const schema = z.object({
     // Faixa aceita, espelhando OMOPIX_MIN_AMOUNT/OMOPIX_MAX_AMOUNT do painel.
     // Quem manda de verdade e o adquirente do OmoPix: fora da faixa dele a
     // criacao responde 422, e validar aqui so serve para o erro ser instantaneo.
-    MIN_ORDER_AMOUNT: z.coerce.number().positive().default(20),
-    MAX_ORDER_AMOUNT: z.coerce.number().positive().default(1000),
+    MIN_ORDER_AMOUNT: z.coerce.number().positive().default(200),
+    MAX_ORDER_AMOUNT: z.coerce.number().positive().default(5000),
     // Libera /internal/simulate/* (contas de teste sem WhatsApp real).
     SIMULATION_ENABLED: z
         .enum(['true', 'false'])

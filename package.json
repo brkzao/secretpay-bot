@@ -1,0 +1,31 @@
+{
+    "name": "secretpay-bot",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Bot de WhatsApp multi-sessão para o painel SecretPay P2P",
+    "main": "dist/index.js",
+    "engines": {
+        "node": ">=22.13.0"
+    },
+    "scripts": {
+        "dev": "tsx watch src/index.ts",
+        "build": "tsc -p tsconfig.json && node scripts/copy-assets.mjs",
+        "start": "node dist/index.js",
+        "simulate": "tsx src/simulate.ts",
+        "receipt:preview": "tsx src/receipt-preview.ts",
+        "types:check": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@napi-rs/canvas": "^1.0.3",
+        "baileys": "6.7.24",
+        "fastify": "^5.11.0",
+        "pino": "^10.3.1",
+        "qrcode-generator": "^2.0.4",
+        "zod": "^4.4.3"
+    },
+    "devDependencies": {
+        "@types/node": "^24.10.0",
+        "tsx": "^4.23.5",
+        "typescript": "^5.9.0"
+    }
+}

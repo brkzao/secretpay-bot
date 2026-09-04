@@ -1,0 +1,18 @@
+# node:sqlite (SQLite embutido, sem dependência nativa) só dispensa a flag
+# --experimental-sqlite a partir do Node 22.13 / 23.4. Não baixe daqui.
+[phases.setup]
+nixPkgs = ["nodejs_22"]
+
+# Fontes para o gerador de comprovantes (@napi-rs/canvas desenha texto com as
+# fontes do sistema; a imagem base não traz nenhuma).
+#
+# Via apt, e não nixPkgs: o pacote Nix instala em /nix/store/..., caminho que o
+# enumerador de fontes não varre. O pacote Debian cai em
+# /usr/share/fonts/truetype/dejavu/, que é descoberto automaticamente.
+aptPkgs = ["fontconfig", "fonts-dejavu-core"]
+
+# A fase de install do Nixpacks já roda `npm ci`. Não repita a instalação no
+# build: o segundo `npm ci` apaga o node_modules e esbarra no cache montado em
+# node_modules/.cache, falhando com EBUSY ao tentar remover o diretório.
+[phases.build]
+cmds = ["npm run build"]

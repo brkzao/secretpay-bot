@@ -27,7 +27,18 @@ const log = logger.child({ scope: 'receipt' });
 
 const LOGO_PATH = resolve(__dirname, '../assets/logo.jpg');
 
-/** Paleta alinhada à marca do painel e à própria logo. */
+/**
+ * Espelho dos tokens do painel (`resources/css/app.css`), para o comprovante
+ * não divergir da marca. Os nomes daqui mapeiam assim:
+ *
+ *   brandDark → --color-primary      brand → --color-secondary
+ *   accent    → --color-accent       ink   → --color-ink-950
+ *   muted     → --color-ink-500      line  → --color-ink-200
+ *
+ * `page` é a única deliberadamente fora da escala: o off-white do site
+ * (#F6F8FC) é claro demais para separar o cartão branco do fundo numa
+ * conversa do WhatsApp, então usamos um tom um passo mais fundo.
+ */
 const COLOR = {
     page: '#EEF2F8',
     card: '#FFFFFF',
@@ -35,8 +46,8 @@ const COLOR = {
     brandDark: '#16305C',
     accent: '#3B8FD9',
     ink: '#0B1524',
-    muted: '#6B7A8C',
-    line: '#E3E8F0',
+    muted: '#5C6B80',
+    line: '#D8DFE9',
 };
 
 const WIDTH = 1080;
@@ -201,18 +212,14 @@ async function drawHeader(
         const size = 112;
         const logoY = centerY - size / 2;
 
-        // O arquivo tem margem branca em volta do selo; ampliamos dentro do
-        // recorte para o selo ocupar o círculo em vez de flutuar no meio dele.
-        const zoom = 1.18;
-        const drawn = size * zoom;
-        const inset = (drawn - size) / 2;
-
+        // A logo já é um círculo que preenche o arquivo inteiro; o recorte
+        // continua aqui só para arredondar as bordas do JPEG.
         ctx.save();
         ctx.beginPath();
         ctx.arc(left + size / 2, logoY + size / 2, size / 2, 0, Math.PI * 2);
         ctx.closePath();
         ctx.clip();
-        ctx.drawImage(logo, left - inset, logoY - inset, drawn, drawn);
+        ctx.drawImage(logo, left, logoY, size, size);
         ctx.restore();
 
         textLeft = left + size + 28;
